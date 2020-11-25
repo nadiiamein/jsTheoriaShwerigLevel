@@ -1,32 +1,33 @@
-//prototype
+//this
+function hello() {
+    console.log('Hallo', this);
+}
 
-// const person = {
-//     name: 'Treffen',
-//     age : 34,
-//     greet: function (){
-//         console.log('Greet');
-//     }
-// }
-const person =  new Object({
-    name: 'Treffen',
-    age : 34,
-    greet: function (){
-        console.log('Greet');
+hello();
+
+const person = {
+    name: ' Irina',
+    age: 35,
+    sayHello: hello,
+    sayHelloWindow: hello.bind(window),
+    logInfo: function (job, phone) {
+        console.group(`${this.name} info:`);
+        console.log(`Name is ${this.name}`);
+        console.log(`Age is ${this.age}`);
+        console.groupEnd();
+        console.log(`Job is ${job}`);
+        console.log(`phone is ${phone}`);
+
     }
-});
+}
+console.log(person.logInfo());
 console.log(person);
-console.log(person.name);
-console.log(person.age);
-console.log(person.greet());
-console.log(person.toString);//prototype
+console.log(person.sayHello());
 
-Object.prototype.sayHallo = function () {console.log('Hallo!')};
-console.log(person.sayHallo());
-    
-const lena = Object.create(person);
-console.log(lena);
-console.log(lena.greet);
-lena.name ='Elena';
-console.log(lena);
-const str = 'I am string';
-console.log(str.sayHallo());
+const ksenia = {
+    name: 'Oksana',
+    age: 18
+}
+person.logInfo.bind(ksenia)();
+const fnKseniaInfoLog =  person.logInfo.bind(ksenia, 'Frontend', '049-098-098-096');
+fnKseniaInfoLog();
