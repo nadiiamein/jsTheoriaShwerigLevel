@@ -98,9 +98,69 @@ console.log(position.x);//gibt se im position
 console.log(position.z);//gibt es nicht
 
 // Hidden properies
-const withHiddenProps = (target, pprefix = '_') => {
+const withHiddenProps = (target, prefix = '_') => {
     return new Proxy(target, {
-has: (obj,prop) => prop in obj && !prop.startsWith(prefix),ownKey: obj => Reflect.ownKeys(obj). filter(p => !startsWith()) 
-get: (obj,prop, reciver) => (prop in receiver ? obj[prop] :)       
+has: (obj, prop) => prop in obj && !prop.startsWith(prefix),   ownKeys: obj => Reflect.ownKeys(obj).filter(p => !p.startsWith(prefix)),
+get: (obj,prop, receiver) => (prop in receiver ? obj[prop] : void 0)       
     })
 }
+
+const data = withHiddenProps({
+    name: 'Wartenmal',
+    age: 30,
+    _uid: '235609'
+});
+console.log(data.name);
+console.log(data._uid);
+'uid' in data;//false
+for (let key in data) {
+  console.log(key);
+}
+console.log(Object.keys.data);
+
+//Optimization
+
+const userData = [
+    {id: 1, name: 'Peter', job: 'Fullstack', age: 90},
+    {id: 2, name: 'Fredsa', job: 'Frontend', age: 25},
+    {id: 3, name: 'Awumm', job: 'Backend', age: 21},
+    {id: 4, name: 'Wegwhh', job: 'Recruter', age: 23}
+
+]
+
+console.log(userData.find(user => user.id ===3));//1 metod tradiconal mit find()
+
+const IndexeArray = new Proxy(Array, {//2 metod mit Proxy
+    construct (target, [args]) {
+        const index ={}
+        args.forEach(item => (index[item.id] = item))
+
+        return new Proxy(new target(...args), {
+        get(arr, prop) {
+            switch (prop) {
+                case 'push':
+                    return item => {
+                        index[item.id] = item 
+                        arr[prop].call(arr, item)
+                    };
+                    case 'findById':
+                    return id => index[id];
+                    default:
+                        return arr[prop];
+
+            }
+        }
+    })
+    }
+})
+
+
+const users = new IndexeArray([    {id: 1, name: 'Peter', job: 'Fullstack', age: 90},
+{id: 2, name: 'Fredsa', job: 'Frontend', age: 25},
+{id: 3, name: 'Awumm', job: 'Backend', age: 21},
+{id: 4, name: 'Wegwhh', job: 'Recruter', age: 23}
+])
+
+
+console.log(users.findById(2));
+console.log(users.findById(22));
