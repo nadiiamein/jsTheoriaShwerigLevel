@@ -80,3 +80,27 @@ get(t, prop)
 const p = new PersonProxy('Peter', 42);
 console.log(p);
 
+
+//wrapper practika
+const withDefaultValue = (target, defaultValue = 0) =>
+ {return new Proxy(target, { get: (obj, prop) => (
+prop in obj ? obj[prop] : defaultValue)
+})
+ }
+
+const position = withDefaultValue({
+    x: 24,
+    y: 42
+},
+0);
+console.log(position);
+console.log(position.x);//gibt se im position
+console.log(position.z);//gibt es nicht
+
+// Hidden properies
+const withHiddenProps = (target, pprefix = '_') => {
+    return new Proxy(target, {
+has: (obj,prop) => prop in obj && !prop.startsWith(prefix),ownKey: obj => Reflect.ownKeys(obj). filter(p => !startsWith()) 
+get: (obj,prop, reciver) => (prop in receiver ? obj[prop] :)       
+    })
+}
