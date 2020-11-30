@@ -1,67 +1,29 @@
-const obj = {
-    name: 'Nadiia',
-    age: 34,
-    job: 'Fullstack'
-}
+//Set obj method
+const set = new Set ([1,2,3,3,4,5,5,6])
+console.log(set);
 
-const entries = [
-    ['name', 'Nadiia'],
-    ['age', 34],
-    ['job', 'Fillstack']
-]
+set.add(10).add(20).add(30).add(20);
+console.log(set);
+console.log(set.size);
+console.log(set.has(20));
+console.log(set.has(42));
+console.log(set.delete(1));
+console.log(set.size);
+//console.log(set.clear());
+console.log(set.size);
 
-console.log(Object.entries(obj));
-console.log(Object.fromEntries(entries));
-
-const map = new Map(entries)
-map
-.set('newField', 42)
-.set(obj, 'Value of object')
-.set(NaN, 'Nan ??')
-
-console.log(map);
-
-//map.delete('job');//delete el
-console.log(map.has('job'));//koken ob el delede? return false oder tue
-console.log(map.size);//velche grosse
-//map.clear();//putz map
-//console.log(map.size);//koken grosse
-
-//for of
-for (let [key, value] of map) {
-    console.log(key, value);
-}
-for (let val of map.values() ){
-    console.log(val);
-}
-for (let key of map.keys()) {
+console.log(set.keys());
+console.log(set.values());
+console.log(set.entries());
+for(let key of set) {
     console.log(key);
 }
-map.forEach((val, key, m) => {
-    console.log(val, key)
-})
 
-//
-const array1 = [...map]//1 method
-console.log(array1);
+//practika
 
-const array =Array.from(map);//2 method
-const mapObj = Object.fromEntries(map.entries())
-console.log(array);
-
-const users = [
-    {name: 'Peter'},
-    {name: 'Alex'},
-    {name: 'Maks'}
-]
-const visits = new Map();
-visits 
-.set(users[0], new Date())
-.set(users[1], new Date(new Date().getTime() + 1000 * 60))
-.set(users[2], new Date(new Date().getTime() + 5000 * 60))
-
-
-function lastVisit(user) {
-    return visits.get(user);
+function uniqValues(array) {
+   // return [...new Set (array)]//1 mothod
+   return Array.from(new Set(array));//2 mothod
 }
-console.log(lastVisit(users[2]));
+
+console.log(uniqValues([1, 1, 2, 2, 4, 4, 4, 4, 4, 5, 6, 6, 6,]));
