@@ -9,6 +9,7 @@ xhr.resposeType = 'json';
 xhr.setRequestHeader('Content-Type', 'application/json')
 
 xhr.onload = () => {
+    
     if(xhr.status >= 400) {
         reject(xhr.response)
     } else {
