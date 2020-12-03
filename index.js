@@ -1,45 +1,24 @@
-//destructur
-
-function calcValues (a,b) {
-    return [
-        a+b,
-        a-b,
-        a*b,
-        a/b
-    ]
-}
-
-const[sum,, mult, ...other] = calcValues(42,10);
-
-
- //const sum = result[0];
- //const sub = result[1];
- //console.log(sum, sub);
-//const [sum, sub] = result; 
-// console.log(result);
- console.log(sum, mult, other);
-//Object
- 
-const person = {
+//localStorage
+const myNumber = 42;
+// localStorage.removeItem('number');//delete el
+// console.log(localStorage.getItem('number'));
+// localStorage.setItem('number', myNumber.toString());
+// console.log(localStorage.getItem('number'));
+// localStorage.clear();//putz alles
+const object = {
     name: 'Peter',
-    age: 27,
-    adress: {
-        country: 'Deutschland',
-        city: 'Frank-am-Main'
-    },
+    age: 22
 }
+//localStorage.setItem('person', JSON.stringify(object));
 
-// const { 
-//     name: firstName = 'Ohne Name',
-//     age,
-//     car = 'Keine Auto',
-//     adress: {city: homeTown, country},
-// } = person
-//console.log(firstName, age, car, homeTown, adress );
-const { name, ...info } = person;
-console.log(name, info);
+const raw = localStorage.getItem('person');
+const person = JSON.parse(raw);
+person.name = 'Petrson';
+//console.log(person);
 
-function logPerson({name: firstName = '111', age}) {
-    console.log(firstName + ' ' + age);
-}
-logPerson(person);
+///
+window.addEventListener('storage', event => {
+    console.log(event);
+});
+const shreib = localStorage.setItem('temp', Date.new()).toString()
+console.log(shreib);
